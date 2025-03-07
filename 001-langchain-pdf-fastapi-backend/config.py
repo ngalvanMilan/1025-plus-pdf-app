@@ -1,5 +1,6 @@
 import os
-import boto3
+# Remove boto3 import since we're not using S3 anymore
+# import boto3
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
@@ -9,17 +10,19 @@ class Settings(BaseSettings):
     DATABASE_PASSWORD: str
     DATABASE_PORT: int
     app_name: str = "Full Stack PDF CRUD App"
-    AWS_KEY: str
-    AWS_SECRET: str
-    AWS_S3_BUCKET: str = "pdf-basic-app"
+    # Remove AWS settings since we're not using S3 anymore
+    # AWS_KEY: str
+    # AWS_SECRET: str
+    # AWS_S3_BUCKET: str = "pdf-basic-app"
 
-    @staticmethod
-    def get_s3_client():
-        return boto3.client(
-            's3',
-            aws_access_key_id=Settings().AWS_KEY,
-            aws_secret_access_key=Settings().AWS_SECRET
-        )
+    # Remove S3 client method since we're not using S3 anymore
+    # @staticmethod
+    # def get_s3_client():
+    #     return boto3.client(
+    #         's3',
+    #         aws_access_key_id=Settings().AWS_KEY,
+    #         aws_secret_access_key=Settings().AWS_SECRET
+    #     )
 
     class Config:
         env_file = ".env"

@@ -5,6 +5,7 @@ import schemas
 import crud
 from database import SessionLocal
 from uuid import uuid4
+from fastapi.responses import FileResponse
 
 # Necessary imports for langchain summarization
 from langchain import OpenAI, PromptTemplate
@@ -61,6 +62,26 @@ def delete_pdf(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="PDF not found")
     return {"message": "PDF successfully deleted"}
 
+@router.get("/download/{id}")
+def download_pdf(id: int, db: Session = Depends(get_db)):
+    import os
+    
+    pdf = crud.read_pdf(db, id)
+    if pdf is None:
+        raise HTTPException(status_code=404, detail="PDF not found")
+    
+    # Get the absolute path to the PDF file
+    file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pdf.file)
+    
+    # Check if file exists
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="PDF file not found on server")
+    
+    return FileResponse(
+        path=file_path,
+        filename=pdf.name,
+        media_type="application/pdf"
+    )
 
 # LANGCHAIN
 langchain_llm = OpenAI(temperature=0)
@@ -89,11 +110,21 @@ async def summarize_text(text: str):
 # Ask a question about one PDF file
 @router.post("/qa-pdf/{id}")
 def qa_pdf_by_id(id: int, question_request: QuestionRequest,db: Session = Depends(get_db)):
+    import os
+    
     pdf = crud.read_pdf(db, id)
     if pdf is None:
         raise HTTPException(status_code=404, detail="PDF not found")
-    print(pdf.file)
-    loader = PyPDFLoader(pdf.file)
+    
+    # Get the absolute path to the PDF file
+    file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), pdf.file)
+    
+    # Check if file exists
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="PDF file not found on server")
+    
+    print(f"Loading PDF from: {file_path}")
+    loader = PyPDFLoader(file_path)
     document = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=3000,chunk_overlap=400)
     document_chunks = text_splitter.split_documents(document)

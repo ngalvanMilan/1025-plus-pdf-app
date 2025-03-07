@@ -2,6 +2,7 @@ import styles from '../styles/pdf-list.module.css';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { debounce } from 'lodash';
 import PDFComponent from './pdf';
+import config from '../config';
 
 export default function PdfList() {
   const [pdfs, setPdfs] = useState([]);
@@ -21,7 +22,7 @@ export default function PdfList() {
     if (selected !== undefined) {
       path = `/pdfs?selected=${selected}`;
     }
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + path);
+    const res = await fetch(config.apiUrl + path);
     const json = await res.json();
     setPdfs(json);
   }
@@ -68,7 +69,7 @@ you will need to restart the frontend.*/
 
   async function updatePdf(pdf, fieldChanged) {
     const body_data = JSON.stringify(pdf);
-    const url = process.env.NEXT_PUBLIC_API_URL + `/pdfs/${pdf.id}`;
+    const url = config.apiUrl + `/pdfs/${pdf.id}`;
  
     await fetch(url, {
         method: 'PUT',
@@ -79,7 +80,7 @@ you will need to restart the frontend.*/
 
 
   async function handleDeletePdf(id) {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + `/pdfs/${id}`, {
+    const res = await fetch(config.apiUrl + `/pdfs/${id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' }
     });
@@ -104,7 +105,7 @@ you will need to restart the frontend.*/
     const formData = new FormData();
     formData.append("file", selectedFile);
 
-    const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/pdfs/upload", {
+    const response = await fetch(config.apiUrl + "/pdfs/upload", {
       method: "POST",
       body: formData,
     });

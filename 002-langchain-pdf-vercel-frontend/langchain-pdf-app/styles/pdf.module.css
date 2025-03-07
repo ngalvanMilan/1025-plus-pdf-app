@@ -15,6 +15,13 @@
     padding: 5px;
 }
 
+.pdfContainer {
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
 .deleteBtn {
     background: none;
     border: 0;
@@ -24,4 +31,26 @@
 
 .deleteBtn:hover {
     color: red;
+}
+
+.qaBtn {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-right: 5px;
+}
+
+.qaBtn:hover {
+    color: #0070f3;
+}
+
+.viewPdfLink {
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.pdfCheckbox {
+    margin-right: 5px;
 }
