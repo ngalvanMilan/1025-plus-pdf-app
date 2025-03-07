@@ -194,7 +194,7 @@ widgetsnbextension==4.0.9
 wrapt==1.16.0
 yarl==1.9.3
 zipp==3.17.0
-langchain==0.3.20
+langchain==0.1.1
 langchain-community==0.3.19
 python-multipart==0.0.20
 faiss-cpu==1.10.0
