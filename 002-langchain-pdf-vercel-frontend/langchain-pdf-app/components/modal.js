@@ -1,54 +1,60 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import styles from '../styles/modal.module.css';
 
 export default function Modal({ isOpen, onClose, title, children }) {
   const modalRef = useRef(null);
-
-  // Close modal when clicking outside
+  const [isBrowser, setIsBrowser] = useState(false);
+  
+  // Verificar que estamos en el navegador
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
+    setIsBrowser(true);
+  }, []);
+  
+  // Cerrar modal con tecla Escape
+  useEffect(() => {
+    const handleEscapeKey = (e) => {
+      if (e.key === 'Escape') {
         onClose();
       }
-    }
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      // Prevent scrolling when modal is open
+    };
+    
+    if (isOpen && isBrowser) {
+      document.addEventListener('keydown', handleEscapeKey);
+      // Prevenir scroll cuando el modal está abierto
       document.body.style.overflow = 'hidden';
     }
-
+    
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen, onClose]);
-
-  // Close modal when pressing Escape key
-  useEffect(() => {
-    function handleEscapeKey(event) {
-      if (event.key === 'Escape') {
-        onClose();
+      if (isBrowser) {
+        document.removeEventListener('keydown', handleEscapeKey);
+        document.body.style.overflow = 'unset';
       }
-    }
-
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscapeKey);
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscapeKey);
     };
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
-
-  return (
-    <div className={styles.modalOverlay}>
+  }, [isOpen, onClose, isBrowser]);
+  
+  // Si el modal no está abierto o no estamos en el navegador, no renderizamos nada
+  if (!isOpen || !isBrowser) return null;
+  
+  // Función para cerrar el modal cuando se hace clic en el overlay
+  const handleOverlayClick = (e) => {
+    // Solo cerramos si el clic fue directamente en el overlay
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+  
+  // El contenido del modal
+  const modalContent = (
+    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
       <div className={styles.modalContainer} ref={modalRef}>
         <div className={styles.modalHeader}>
           <h2 className={styles.modalTitle}>{title}</h2>
-          <button className={styles.closeButton} onClick={onClose}>
+          <button 
+            className={styles.closeButton} 
+            onClick={onClose}
+            aria-label="Close modal"
+          >
             &times;
           </button>
         </div>
@@ -57,5 +63,11 @@ export default function Modal({ isOpen, onClose, title, children }) {
         </div>
       </div>
     </div>
+  );
+  
+  // Usamos createPortal para renderizar el modal fuera del árbol DOM normal
+  return createPortal(
+    modalContent,
+    document.body // Renderizamos el modal directamente en el body
   );
 } 

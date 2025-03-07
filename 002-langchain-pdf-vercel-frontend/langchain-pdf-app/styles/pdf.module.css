@@ -1,56 +1,98 @@
 .pdfInput {
-    padding: 8px;
-    border: 1px solid #ccc;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--pastel-primary);
     width: calc(100% - 10px);
-    height: 30px;
-    margin: 0 10px 0px 10px;
-    border-radius: 4px;
+    height: 38px;
+    margin: 0 var(--spacing-md) 0 var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+.pdfInput:focus {
+    outline: none;
+    border-color: var(--pastel-primary-dark);
+    box-shadow: 0 0 0 3px rgba(165, 216, 255, 0.3);
 }
 
 .pdfRow {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 10px 10px 0px 10px;
-    padding: 5px;
+    padding: var(--spacing-md);
 }
 
 .pdfContainer {
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: var(--spacing-lg);
     overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.pdfContainer:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .deleteBtn {
     background: none;
     border: 0;
     cursor: pointer;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .deleteBtn:hover {
-    color: red;
+    background-color: var(--pastel-danger);
+    color: var(--text-primary);
 }
 
 .qaBtn {
     background: none;
     border: 0;
     cursor: pointer;
-    transition: color 0.3s ease;
-    margin-right: 5px;
+    transition: all 0.3s ease;
+    margin-right: var(--spacing-sm);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .qaBtn:hover {
-    color: #0070f3;
+    background-color: var(--pastel-primary);
+    color: var(--text-primary);
 }
 
 .viewPdfLink {
-    margin-right: 5px;
+    margin-right: var(--spacing-sm);
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.viewPdfLink:hover {
+    background-color: var(--pastel-secondary);
 }
 
 .pdfCheckbox {
-    margin-right: 5px;
+    margin-right: var(--spacing-sm);
+    width: 18px;
+    height: 18px;
+    accent-color: var(--pastel-primary);
+    cursor: pointer;
 }

@@ -49,7 +49,6 @@ export default function PdfQA({ pdfId, pdfName }) {
 
   return (
     <div className={styles.qaContainer}>
-      <h3>Ask a question about "{pdfName}"</h3>
       <form onSubmit={handleSubmit} className={styles.qaForm}>
         <input
           type="text"
