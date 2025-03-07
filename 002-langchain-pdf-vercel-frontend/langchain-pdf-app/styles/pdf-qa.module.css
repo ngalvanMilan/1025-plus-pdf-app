@@ -1,9 +1,4 @@
 .qaContainer {
-  margin-top: 20px;
-  padding: 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #f9f9f9;
   width: 100%;
 }
 
@@ -15,58 +10,122 @@
 
 .qaForm {
   display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .questionInput {
   flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
   font-size: 1rem;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.questionInput:focus {
+  outline: none;
+  border-color: #0070f3;
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.2);
+}
+
+.questionInput:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
 }
 
 .askButton {
-  padding: 10px 20px;
+  padding: 12px 24px;
   background-color: #0070f3;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: 500;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
 }
 
 .askButton:hover {
   background-color: #0051b3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.askButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .askButton:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .errorMessage {
   color: #d32f2f;
-  margin-top: 10px;
+  margin: 12px 0;
+  padding: 12px;
+  background-color: rgba(211, 47, 47, 0.1);
+  border-radius: 8px;
+  font-size: 0.9rem;
 }
 
 .answerContainer {
   margin-top: 20px;
-  padding: 15px;
-  background-color: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #0070f3;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .answerContainer h4 {
   margin-top: 0;
   color: #333;
   font-size: 1.1rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.answerContainer h4::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-color: #0070f3;
+  border-radius: 50%;
+  margin-right: 8px;
 }
 
 .answerText {
   white-space: pre-line;
-  line-height: 1.5;
+  line-height: 1.6;
+  color: #333;
+  font-size: 1rem;
+}
+
+.loadingSpinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 } 

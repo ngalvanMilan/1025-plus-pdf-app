@@ -22,6 +22,7 @@ export default function PdfQA({ pdfId, pdfName }) {
 
     setIsLoading(true);
     setError('');
+    setAnswer('');
     
     try {
       const response = await fetch(`${config.apiUrl}/pdfs/qa-pdf/${pdfId}`, {
@@ -63,7 +64,12 @@ export default function PdfQA({ pdfId, pdfName }) {
           className={styles.askButton}
           disabled={isLoading}
         >
-          {isLoading ? 'Thinking...' : 'Ask'}
+          {isLoading ? (
+            <>
+              <span className={styles.loadingSpinner}></span>
+              Thinking...
+            </>
+          ) : 'Ask Question'}
         </button>
       </form>
       
@@ -71,7 +77,7 @@ export default function PdfQA({ pdfId, pdfName }) {
       
       {answer && (
         <div className={styles.answerContainer}>
-          <h4>Answer:</h4>
+          <h4>Answer</h4>
           <p className={styles.answerText}>{answer}</p>
         </div>
       )}
